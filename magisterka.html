@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+<meta charset="UTF-8">
+
+<title>Analiza parametrów oceanów</title>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2xZJpWd7iuvQJpTPdbR3BleNULXDAkfw&callback=initializeMap" async defer></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:'Segoe UI', Arial, sans-serif;
+    color:#f8fafc;
+
+    background:
+        linear-gradient(
+            rgba(15,23,42,0.55),
+            rgba(15,23,42,0.55)
+        ),
+        url("hubble.png");
+
+    background-size:cover;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
+header{
+    background:rgba(30,41,59,0.88);
+    padding:25px;
+    text-align:center;
+    border-bottom:2px solid #38bdf8;
+    backdrop-filter:blur(6px);
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+    font-weight:600;
+}
+
+header p{
+    margin-top:10px;
+    color:#cbd5e1;
+}
+
+.container{
+    display:flex;
+    gap:20px;
+    padding:20px;
+}
+
+#map_canvas{
+    width:100%;
+    height:650px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.4);
+}
+
+.sidebar{
+    width:32%;
+    background:rgba(30,41,59,0.88);
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.4);
+    backdrop-filter:blur(6px);
+}
+
+.sidebar h2{
+    margin-top:0;
+    color:#38bdf8;
+    border-bottom:1px solid #334155;
+    padding-bottom:10px;
+}
+
+details{
+    margin-bottom:12px;
+}
+
+summary{
+    cursor:pointer;
+    padding:12px;
+    background:#334155;
+    border-radius:8px;
+    font-weight:600;
+    transition:0.2s;
+    list-style:none;
+}
+
+summary:hover{
+    background:#475569;
+}
+    details details summary{
+    font-weight:400;
+    text-align:center;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    margin-top:6px;
+    border:none;
+    border-radius:8px;
+    background:#475569;
+    color:white;
+    cursor:pointer;
+    transition:0.2s;
+    font-size:14px;
+}
+
+button:hover{
+    background:#38bdf8;
+    color:#0f172a;
+}
+
+#plot_container{
+    padding:20px;
+    text-align:center;
+}
+
+#placeholder{
+
+    width:95%;
+    max-width:1500px;
+
+    margin:auto;
+
+    padding:80px 40px;
+
+    background:rgba(30,41,59,0.88);
+
+    border-radius:12px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.5);
+
+    text-align:center;
+
+    backdrop-filter:blur(6px);
+}
+
+#placeholder h2{
+
+    color:#38bdf8;
+
+    margin-bottom:20px;
+}
+
+#placeholder p{
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+    line-height:1.6;
+}
+
+#plot_area_name{
+
+    width:95%;
+    max-width:1500px;
+
+    margin:0 auto 15px auto;
+
+    text-align:left;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    color:#38bdf8;
+}
+    
+#plot_image{
+    width:95%;
+    max-width:1500px;
+    border-radius:12px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.5);
+    background:white;
+    display:none;
+}
+
+.info_box{
+    margin-bottom:15px;
+    padding:12px;
+    background:rgba(15,23,42,0.75);
+    border:1px solid #334155;
+    border-radius:8px;
+    color:#cbd5e1;
+}
+
+footer{
+    text-align:center;
+    color:#94a3b8;
+    padding:25px;
+    border-top:1px solid #334155;
+    margin-top:20px;
+    background:rgba(15,23,42,0.75);
+}
+
+#globalButton{
+    position:absolute;
+    left:15px;
+    top:15px;
+    z-index:1000;
+
+    padding:10px 14px;
+
+    background:rgba(30,41,59,0.9);
+    color:white;
+
+    border:none;
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    width:auto;
+
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+#globalButton:hover{
+    background:#38bdf8;
+    color:#0f172a;
+}
+</style>
+
+<script>
+
+var map;
+var selectedArea = "";
+const areaInfo = {
+
+"Północno-zachodni obszar Oceanu Atlantyckiego": {
+    range: "57°N–62°N, 56°W–51°W",
+    climate: "okołobiegunowa"
+},
+
+"Zachodni obszar Oceanu Atlantyckiego": {
+    range: "34°N–39°N, 73°W–68°W",
+    climate: "podzwrotnikowa"
+},
+
+"Centralny obszar Oceanu Spokojnego": {
+    range: "2°S–3°N, 152°W–147°W",
+    climate: "równikowa"
+},
+
+"Pacyficzny obszar Oceanu Południowego": {
+    range: "65°S–60°S, 120°W–115°W",
+    climate: "okołobiegunowa"
+},
+
+"Północno-zachodni obszar Oceanu Indyjskiego": {
+    range: "13°N–18°N, 62°E–67°E",
+    climate: "zwrotnikowa"
+},
+
+"Południowo-zachodni obszar Oceanu Indyjskiego": {
+    range: "43°S–38°S, 20°E–25°E",
+    climate: "umiarkowana"
+},
+
+"Północno-zachodni obszar Oceanu Spokojnego": {
+    range: "37°N–42°N, 159°E–164°E",
+    climate: "umiarkowana"
+}
+
+};
+
+function initializeMap(){
+
+    map = new google.maps.Map(
+    	document.getElementById("map_canvas"),
+    	{
+        	center:{lat:20,lng:0},
+        	zoom:2,
+        	mapTypeId:"satellite",
+        	mapTypeControl:false,
+            streetViewControl:false
+    }
+);
+
+    createBox(
+    62,57,-56,-51,
+    "Północno-zachodni obszar Oceanu Atlantyckiego"
+);
+
+	createBox(
+    39,34,-73,-68,
+    "Zachodni obszar Oceanu Atlantyckiego"
+);
+
+	createBox(
+    3,-2,-152,-147,
+    "Centralny obszar Oceanu Spokojnego"
+);
+
+	createBox(
+    -60,-65,-120,-115,
+    "Pacyficzny obszar Oceanu Południowego"
+);
+
+	createBox(
+    18,13,62,67,
+    "Północno-zachodni obszar Oceanu Indyjskiego"
+);
+
+	createBox(
+    -38,-43,20,25,
+    "Południowo-zachodni obszar Oceanu Indyjskiego"
+);
+
+	createBox(
+    42,37,159,164,
+    "Północno-zachodni obszar Oceanu Spokojnego"
+);
+}
+function createBox(north,south,west,east,name){
+
+    var box = new google.maps.Rectangle({
+
+        strokeColor:"#38bdf8",
+        strokeOpacity:1.0,
+        strokeWeight:2,
+
+        fillColor:"#38bdf8",
+        fillOpacity:0.15,
+
+        map:map,
+
+        bounds:{
+            north:north,
+            south:south,
+            west:west,
+            east:east
+        }
+    });
+
+	box.addListener("click",function(){
+
+    	document.getElementById("start_info").innerHTML =
+    	"Wybierz rodzaj analizy spośród poniższych.";
+
+    	selectedArea = name;
+
+    	document.getElementById("area_name").innerHTML =
+    	name;
+
+    	document.getElementById("plot_area_name").innerHTML =
+    	name;
+        
+        const info = areaInfo[name];
+
+		document.getElementById("area_info").style.display = "block";
+
+		document.getElementById("area_info").innerHTML =
+		"<b>Zakres:</b><br>" +
+		info.range +
+		"<br><br>" +
+		"<b>Strefa klimatyczna:</b><br>" +
+		info.climate;
+
+    	var bounds = box.getBounds();
+
+		map.panTo(bounds.getCenter());
+
+		var zooms = [3,4,5,6];
+
+		zooms.forEach(function(z, i) {
+    		setTimeout(function() {
+        		map.setZoom(z);
+    	}, i * 250);
+});
+
+setTimeout(function() {
+    map.fitBounds(bounds);
+}, 1200);
+
+	});
+
+}
+
+function showImage(file){
+
+    document.getElementById("placeholder").style.display = "none";
+
+    document.getElementById("plot_image").style.display = "block";
+
+    document.getElementById("plot_image").src = file;
+
+}
+
+function resetMap(){
+
+    map.setCenter({lat:20,lng:0});
+    map.setZoom(2);
+
+    document.getElementById("area_name").innerHTML =
+    "Wybierz obszar na mapie";
+
+    document.getElementById("area_info").style.display =
+    "none";
+
+    document.getElementById("plot_area_name").innerHTML =
+    "";
+
+    document.getElementById("start_info").innerHTML =
+    "Kliknij jeden z analizowanych obszarów na mapie, aby wyświetlić wyniki analiz.";
+
+    selectedArea = "";
+}
+</script>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>
+Analiza zmian temperatury, zasolenia i topografii oceanów na podstawie danych satelitarnych
+</h1>
+
+<p>
+Aplikacja internetowa umożliwia interaktywne wyświetlanie wyników analizy zmian parametrów oceanicznych dla siedmiu wybranych obszarów badawczych
+</p>
+    
+</header>
+
+<div class="container">
+
+<div style="width:68%;position:relative;">
+
+    <div id="map_canvas"></div>
+
+    <button id="globalButton" onclick="resetMap()">
+        Widok globalny
+    </button>
+
+</div>
+
+<div class="sidebar">
+
+<h2 id="area_name">
+Wybierz obszar na mapie
+</h2>
+
+<div id="area_info" class="info_box" style="display:none;">
+<b>Zakres:</b><br>
+-<br><br>
+
+<b>Strefa klimatyczna:</b><br>
+-
+</div>
+
+<div class="info_box" id="start_info">
+Kliknij jeden z analizowanych obszarów na mapie, aby wyświetlić wyniki analiz.
+</div>
+
+<details>
+
+<summary>
+Wpływ sezonowości na przebieg zmian parametrów oceanicznych w pięcioletnich oknach czasowych
+</summary>
+
+<button>
+2000-2004
+</button>
+
+<button>
+2005-2009
+</button>
+
+<button>
+2010-2014
+</button>
+
+<button>
+2015-2019
+</button>
+
+<button>
+2020-2024
+</button>
+
+<button>
+2021-2025
+</button>
+
+</details>
+
+<details>
+
+<summary>
+Zmienność parametrów oceanicznych w pełnym okresie obserwacji
+</summary>
+
+<button>
+Z uwzględnieniem sezonowości
+</button>
+
+<button onclick="showImage('nw_atlantic_timeseries_deseasoned.png')">
+Po usunięciu sezonowości
+</button>
+
+</details>
+
+<details>
+
+<summary>
+Trendy liniowe parametrów oceanicznych w pięcioletnich oknach czasowych
+</summary>
+
+<button>
+Z uwzględnieniem sezonowości
+</button>
+
+<button>
+Po usunięciu sezonowości
+</button>
+
+</details>
+
+<details>
+
+<summary>
+Zależności pomiędzy parametrami oceanicznymi w pełnym okresie obserwacji
+</summary>
+
+<button>
+Z uwzględnieniem sezonowości
+</button>
+
+<button>
+Po usunięciu sezonowości
+</button>
+
+</div>
+
+</div>
+
+<div id="plot_container">
+
+<div id="plot_area_name"></div>
+
+<div id="placeholder">
+
+<h2>Wybierz analizę</h2>
+
+<p>
+Wybierz rodzaj analizy w panelu po prawej stronie.
+</p>
+
+</div>
+
+<img
+id="plot_image"
+src=""
+alt="Wykres">
+
+</div>
+
+<footer>
+
+inż. Jakub Wojdyło<br>
+Geodezja i Kartografia<br>
+Wydział Inżynierii Kształtowania Środowiska i Geodezji<br>
+Uniwersytet Przyrodniczy we Wrocławiu<br>
+2026
+
+</footer>
+
+</body>
+
+</html>
