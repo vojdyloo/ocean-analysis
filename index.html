@@ -384,11 +384,6 @@ function createBox(north,south,west,east,name){
 
 setTimeout(function() {
     map.fitBounds(bounds);
-
-    setTimeout(function() {
-        map.setZoom(map.getZoom() - 3);
-    }, 100);
-
 }, 1200);
 });
 }
