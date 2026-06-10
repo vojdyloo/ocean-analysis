@@ -27,5 +27,5 @@ https://vojdyloo.github.io/ocean-analysis/
 - HTML
 - CSS
 - JavaScript
-- Google Maps JavaScript API
+- Google Maps API
 - GitHub Pages
