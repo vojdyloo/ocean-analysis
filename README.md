@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="logo_gik.png" width="180">
-</p>
+<img src="logo_gik.png" width="120">
 
 ## Opis projektu
 
