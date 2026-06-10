@@ -1,5 +1,4 @@
-# Ocean Analysis
-### Załącznik A do pracy magisterskiej
+# Załącznik A do pracy magisterskiej
 
 <img src="logo_gik.png" width="120">
 
