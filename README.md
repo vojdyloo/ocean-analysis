@@ -1,4 +1,6 @@
-# ocean-analysis
+<p align="center">
+  <img src="logo_gik.png" width="180">
+</p>
 
 ## Opis projektu
 
