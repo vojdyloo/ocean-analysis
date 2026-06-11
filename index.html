@@ -821,37 +821,37 @@ function showSeasonality(period){
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
         prefix = "central_pacific";
-        areaText = "centralnego obszaru Oceanu Spokojnego";
+        areaText = "centralnym obszarze Oceanu Spokojnego";
     }
 
     else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
         prefix = "nw_atlantic";
-        areaText = "północno-zachodniego obszaru Oceanu Atlantyckiego";
+        areaText = "północno-zachodnim obszarze Oceanu Atlantyckiego";
     }
 
     else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
         prefix = "nw_indian";
-        areaText = "północno-zachodniego obszaru Oceanu Indyjskiego";
+        areaText = "północno-zachodnim obszarze Oceanu Indyjskiego";
     }
 
     else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
         prefix = "nw_pacific";
-        areaText = "północno-zachodniego obszaru Oceanu Spokojnego";
+        areaText = "północno-zachodnim obszarze Oceanu Spokojnego";
     }
 
     else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
         prefix = "southern_ocean";
-        areaText = "pacyficznego obszaru Oceanu Południowego";
+        areaText = "pacyficznym obszarze Oceanu Południowego";
     }
 
     else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
         prefix = "sw_indian";
-        areaText = "południowo-zachodniego obszaru Oceanu Indyjskiego";
+        areaText = "południowo-zachodnim obszarze Oceanu Indyjskiego";
     }
 
     else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
         prefix = "w_atlantic";
-        areaText = "zachodniego obszaru Oceanu Atlantyckiego";
+        areaText = "zachodnim obszarze Oceanu Atlantyckiego";
     }
 
     document.getElementById("placeholder").style.display = "none";
@@ -868,7 +868,7 @@ function showSeasonality(period){
         <div class="plot_block">
 
             <div class="plot_caption">
-                Temperatura powierzchni morza (SST) w obszarze ${areaText}
+                Temperatura powierzchni morza (SST) w ${areaText}
                 w latach ${period.replace("_","–")}
                 z uwzględnieniem i po usunięciu sezonowości.
             </div>
@@ -884,7 +884,7 @@ function showSeasonality(period){
             <div class="plot_block">
 
                 <div class="plot_caption">
-                    Anomalia zasolenia powierzchni morza (SSSA) w obszarze ${areaText}
+                    Anomalie zasolenia powierzchni morza (SSSA) w ${areaText}
                     w latach ${period.replace("_","–")}
                     z uwzględnieniem i po usunięciu sezonowości.
                 </div>
@@ -913,7 +913,7 @@ function showSeasonality(period){
         <div class="plot_block">
 
             <div class="plot_caption">
-                Anomalia wysokości powierzchni morza (SSHA) w obszarze ${areaText}
+                Anomalie wysokości powierzchni morza (SSHA) w ${areaText}
                 w latach ${period.replace("_","–")}
                 z uwzględnieniem i po usunięciu sezonowości.
             </div>
