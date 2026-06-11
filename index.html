@@ -729,6 +729,58 @@ function showCorrelationsSeasonal(){
         `Zależność pomiędzy SSSA a SSHA z uwzględnieniem sezonowości w ${areaText} w pełnym okresie obserwacji (SSHA: 2000–2025, SSSA: 2004–2017).`
     );
 }
+	function showCorrelationsDeseasoned(){
+
+    let prefix = "";
+    let areaText = "";
+
+    if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
+        prefix = "central_pacific";
+        areaText = "centralnym obszarze Oceanu Spokojnego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
+        prefix = "nw_atlantic";
+        areaText = "północno-zachodnim obszarze Oceanu Atlantyckiego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
+        prefix = "nw_indian";
+        areaText = "północno-zachodnim obszarze Oceanu Indyjskiego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
+        prefix = "nw_pacific";
+        areaText = "północno-zachodnim obszarze Oceanu Spokojnego";
+    }
+
+    else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
+        prefix = "southern_ocean";
+        areaText = "pacyficznym obszarze Oceanu Południowego";
+    }
+
+    else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
+        prefix = "sw_indian";
+        areaText = "południowo-zachodnim obszarze Oceanu Indyjskiego";
+    }
+
+    else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
+        prefix = "w_atlantic";
+        areaText = "zachodnim obszarze Oceanu Atlantyckiego";
+    }
+
+    showThreePlots(
+
+        `${prefix}_corr_sst_ssha_deseasoned.png`,
+        `Zależność pomiędzy SST a SSHA po usunięciu sezonowości w ${areaText} w pełnym okresie obserwacji (SST i SSHA: 2000–2025).`,
+
+        `${prefix}_corr_sst_sssa_deseasoned.png`,
+        `Zależność pomiędzy SST a SSSA po usunięciu sezonowości w ${areaText} w pełnym okresie obserwacji (SST: 2000–2025, SSSA: 2004–2017).`,
+
+        `${prefix}_corr_sssa_ssha_deseasoned.png`,
+        `Zależność pomiędzy SSSA a SSHA po usunięciu sezonowości w ${areaText} w pełnym okresie obserwacji (SSHA: 2000–2025, SSSA: 2004–2017).`
+    );
+}
 function showThreePlots(plot1,title1,plot2,title2,plot3,title3){
 
     document.getElementById("placeholder").style.display = "none";
@@ -902,7 +954,7 @@ Zależności pomiędzy parametrami oceanicznymi w pełnym okresie obserwacji
 Z uwzględnieniem sezonowości
 </button>
 
-<button>
+<button onclick="showCorrelationsDeseasoned()">
 Po usunięciu sezonowości
 </button>
 	
