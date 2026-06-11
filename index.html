@@ -177,6 +177,22 @@ button:hover{
 
     color:#38bdf8;
 }
+
+#plot_title{
+
+    width:95%;
+    max-width:1500px;
+
+    margin:0 auto 15px auto;
+
+    text-align:center;
+
+    font-size:18px;
+
+    color:#cbd5e1;
+
+    line-height:1.6;
+}
     
 #plot_image{
     width:95%;
@@ -380,7 +396,7 @@ function createBox(north,south,west,east,name){
 });
 }
 
-function showImage(file){
+function showImage(file,title){
 
     document.getElementById("placeholder").style.display = "none";
 
@@ -388,6 +404,66 @@ function showImage(file){
 
     document.getElementById("plot_image").src = file;
 
+    document.getElementById("plot_title").innerHTML = title;
+
+}
+function showTimeseriesSeasonal(){
+
+    if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
+
+        showImage(
+            "central_pacific_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w centralnym obszarze Oceanu Spokojnego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
+
+        showImage(
+            "nw_atlantic_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w północno-zachodnim obszarze Oceanu Atlantyckiego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
+
+        showImage(
+            "nw_indian_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w północno-zachodnim obszarze Oceanu Indyjskiego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
+
+        showImage(
+            "nw_pacific_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w północno-zachodnim obszarze Oceanu Spokojnego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
+
+    else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
+
+        showImage(
+            "southern_ocean_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w pacyficznym obszarze Oceanu Południowego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
+
+    else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
+
+        showImage(
+            "sw_indian_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w południowo-zachodnim obszarze Oceanu Indyjskiego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
+
+    else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
+
+        showImage(
+            "w_atlantic_timeseries.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w zachodnim obszarze Oceanu Atlantyckiego w pełnym okresie obserwacji z uwzględnieniem sezonowości (źródło: opracowanie własne)."
+        );
+    }
 }
 
 function resetMap(){
@@ -395,18 +471,20 @@ function resetMap(){
     map.setCenter({lat:20,lng:0});
     map.setZoom(2);
 
-    document.getElementById("area_name").innerHTML =
-    "Wybierz obszar na mapie";
+    document.getElementById("area_name").innerHTML = "Wybierz obszar na mapie";
 
-    document.getElementById("area_info").style.display =
-    "none";
+    document.getElementById("area_info").style.display = "none";
 
-    document.getElementById("plot_area_name").innerHTML =
-    "";
+    document.getElementById("plot_area_name").innerHTML = "";
 
-    document.getElementById("start_info").innerHTML =
-    "Kliknij jeden z analizowanych obszarów na mapie, aby wyświetlić wyniki analiz.";
+    document.getElementById("start_info").innerHTML = "Kliknij jeden z analizowanych obszarów na mapie, aby wyświetlić wyniki analiz.";
 
+	document.getElementById("plot_title").innerHTML = "";
+
+	document.getElementById("plot_image").style.display = "none";
+
+	document.getElementById("placeholder").style.display = "block";
+	
     selectedArea = "";
 }
 </script>
@@ -494,8 +572,8 @@ Wpływ sezonowości na przebieg zmian parametrów oceanicznych w pięcioletnich 
 <summary>
 Zmienność parametrów oceanicznych w pełnym okresie obserwacji
 </summary>
-
-<button>
+	
+<button onclick="showTimeseriesSeasonal()">
 Z uwzględnieniem sezonowości
 </button>
 
@@ -544,6 +622,8 @@ Po usunięciu sezonowości
 <div id="plot_container">
 
 <div id="plot_area_name"></div>
+
+<div id="plot_title"></div>
 
 <div id="placeholder">
 
