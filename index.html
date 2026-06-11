@@ -466,6 +466,65 @@ function showTimeseriesSeasonal(){
     }
 }
 
+function showTimeseriesDeseasoned(){
+
+    if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
+
+        showImage(
+            "central_pacific_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w centralnym obszarze Oceanu Spokojnego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
+
+        showImage(
+            "nw_atlantic_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w północno-zachodnim obszarze Oceanu Atlantyckiego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
+
+        showImage(
+            "nw_indian_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w północno-zachodnim obszarze Oceanu Indyjskiego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
+
+        showImage(
+            "nw_pacific_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w północno-zachodnim obszarze Oceanu Spokojnego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+
+    else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
+
+        showImage(
+            "southern_ocean_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w pacyficznym obszarze Oceanu Południowego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+
+    else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
+
+        showImage(
+            "sw_indian_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w południowo-zachodnim obszarze Oceanu Indyjskiego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+
+    else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
+
+        showImage(
+            "w_atlantic_timeseries_deseasoned.png",
+            "Zmienność temperatury powierzchni morza, anomalii zasolenia oraz anomalii wysokości powierzchni morza w zachodnim obszarze Oceanu Atlantyckiego w pełnym okresie obserwacji po usunięciu sezonowości"
+        );
+    }
+}
+	
 function resetMap(){
 
     map.setCenter({lat:20,lng:0});
@@ -577,7 +636,7 @@ Zmienność parametrów oceanicznych w pełnym okresie obserwacji
 Z uwzględnieniem sezonowości
 </button>
 
-<button onclick="showImage('nw_atlantic_timeseries_deseasoned.png')">
+<button onclick="showTimeseriesDeseasoned()">
 Po usunięciu sezonowości
 </button>
 
