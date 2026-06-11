@@ -374,17 +374,9 @@ function createBox(north,south,west,east,name){
 
 		map.panTo(bounds.getCenter());
 
-		var zooms = [3,4,5,6];
-
-		zooms.forEach(function(z, i) {
-    		setTimeout(function() {
-        		map.setZoom(z);
-    	}, i * 250);
-});
-
-setTimeout(function() {
-    map.fitBounds(bounds);
-}, 1200);
+		setTimeout(function() {
+    		map.setZoom(4);
+			}, 300);
 });
 }
 
