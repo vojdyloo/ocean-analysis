@@ -809,6 +809,121 @@ function showThreePlots(plot1,title1,plot2,title2,plot3,title3){
         </div>
     `;
 }
+
+function showSeasonality(period){
+	if(selectedArea === ""){
+        alert("Najpierw wybierz obszar na mapie.");
+        return;
+    }
+
+    let prefix = "";
+    let areaText = "";
+
+    if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
+        prefix = "central_pacific";
+        areaText = "centralnego obszaru Oceanu Spokojnego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
+        prefix = "nw_atlantic";
+        areaText = "północno-zachodniego obszaru Oceanu Atlantyckiego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
+        prefix = "nw_indian";
+        areaText = "północno-zachodniego obszaru Oceanu Indyjskiego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
+        prefix = "nw_pacific";
+        areaText = "północno-zachodniego obszaru Oceanu Spokojnego";
+    }
+
+    else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
+        prefix = "southern_ocean";
+        areaText = "pacyficznego obszaru Oceanu Południowego";
+    }
+
+    else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
+        prefix = "sw_indian";
+        areaText = "południowo-zachodniego obszaru Oceanu Indyjskiego";
+    }
+
+    else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
+        prefix = "w_atlantic";
+        areaText = "zachodniego obszaru Oceanu Atlantyckiego";
+    }
+
+    document.getElementById("placeholder").style.display = "none";
+
+    document.getElementById("plot_image").style.display = "none";
+	
+	document.getElementById("plot_image").src = "";
+
+    document.getElementById("plot_title").innerHTML = "";
+
+    let html = "";
+	 html += `
+
+        <div class="plot_block">
+
+            <div class="plot_caption">
+                Temperatura powierzchni morza (SST) w obszarze ${areaText}
+                w latach ${period.replace("_","–")}
+                z uwzględnieniem i po usunięciu sezonowości.
+            </div>
+
+            <img src="${prefix}_sst_seasonality_${period}.png">
+
+        </div>
+    `;
+	if(period === "2005_2009" || period === "2010_2014"){
+
+        html += `
+
+            <div class="plot_block">
+
+                <div class="plot_caption">
+                    Anomalia zasolenia powierzchni morza (SSSA) w obszarze ${areaText}
+                    w latach ${period.replace("_","–")}
+                    z uwzględnieniem i po usunięciu sezonowości.
+                </div>
+
+                <img src="${prefix}_sssa_seasonality_${period}.png">
+
+            </div>
+        `;
+    }
+
+    else{
+
+        html += `
+
+            <div class="plot_block">
+
+                <div class="plot_caption">
+                    <b>UWAGA:</b> brak danych dotyczących SSSA dla tego okresu.
+                </div>
+
+            </div>
+        `;
+    }
+	html += `
+
+        <div class="plot_block">
+
+            <div class="plot_caption">
+                Anomalia wysokości powierzchni morza (SSHA) w obszarze ${areaText}
+                w latach ${period.replace("_","–")}
+                z uwzględnieniem i po usunięciu sezonowości.
+            </div>
+
+            <img src="${prefix}_ssha_seasonality_${period}.png">
+
+        </div>
+    `;
+	document.getElementById("plots_container").innerHTML = html;
+}
 function resetMap(){
 
     map.setCenter({lat:20,lng:0});
@@ -886,27 +1001,27 @@ Kliknij jeden z analizowanych obszarów na mapie, aby wyświetlić wyniki analiz
 Wpływ sezonowości na przebieg zmian parametrów oceanicznych w pięcioletnich oknach czasowych
 </summary>
 
-<button>
+<button onclick="showSeasonality('2000_2004')">
 2000-2004
 </button>
 
-<button>
+<button onclick="showSeasonality('2005_2009')">
 2005-2009
 </button>
 
-<button>
+<button onclick="showSeasonality('2010_2014')">
 2010-2014
 </button>
 
-<button>
+<button onclick="showSeasonality('2015_2019')">
 2015-2019
 </button>
 
-<button>
+<button onclick="showSeasonality('2020_2024')">
 2020-2024
 </button>
 
-<button>
+<button onclick="showSeasonality('2021_2025')">
 2021-2025
 </button>
 
