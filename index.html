@@ -445,6 +445,9 @@ function showImage(file,title){
 
 }
 function showTimeseriesSeasonal(){
+	if(selectedArea === ""){
+        return;
+    }
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -504,7 +507,9 @@ function showTimeseriesSeasonal(){
 }
 
 function showTimeseriesDeseasoned(){
-
+	if(selectedArea === ""){
+        return;
+    }
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
         showImage(
@@ -562,6 +567,9 @@ function showTimeseriesDeseasoned(){
     }
 }
 function showTrendsSeasonal(){
+	if(selectedArea === ""){
+        return;
+    }
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -620,6 +628,9 @@ function showTrendsSeasonal(){
     }
 }
 function showTrendsDeseasoned(){
+	if(selectedArea === ""){
+        return;
+    }
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -678,6 +689,9 @@ function showTrendsDeseasoned(){
     }
 }
 function showCorrelationsSeasonal(){
+	if(selectedArea === ""){
+        return;
+    }
 
     let prefix = "";
     let areaText = "";
@@ -730,6 +744,9 @@ function showCorrelationsSeasonal(){
     );
 }
 	function showCorrelationsDeseasoned(){
+		if(selectedArea === ""){
+        return;
+    }
 
     let prefix = "";
     let areaText = "";
@@ -782,6 +799,9 @@ function showCorrelationsSeasonal(){
     );
 }
 function showThreePlots(plot1,title1,plot2,title2,plot3,title3){
+	if(selectedArea === ""){
+        return;
+    }
 
     document.getElementById("placeholder").style.display = "none";
 	
@@ -812,7 +832,6 @@ function showThreePlots(plot1,title1,plot2,title2,plot3,title3){
 
 function showSeasonality(period){
 	if(selectedArea === ""){
-        alert("Najpierw wybierz obszar na mapie.");
         return;
     }
 
