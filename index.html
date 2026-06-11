@@ -582,7 +582,64 @@ function showTrendsSeasonal(){
         );
     }
 }
-	
+function showTrendsDeseasoned(){
+
+    if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
+
+        showImage(
+            "central_pacific_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla centralnego obszaru Oceanu Spokojnego"
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
+
+        showImage(
+            "nw_atlantic_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla północno-zachodniego obszaru Oceanu Atlantyckiego"
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
+
+        showImage(
+            "nw_indian_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla północno-zachodniego obszaru Oceanu Indyjskiego"
+        );
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
+
+        showImage(
+            "nw_pacific_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla północno-zachodniego obszaru Oceanu Spokojnego"
+        );
+    }
+
+    else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
+
+        showImage(
+            "southern_ocean_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla pacyficznego obszaru Oceanu Południowego"
+        );
+    }
+
+    else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
+
+        showImage(
+            "sw_indian_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla południowo-zachodniego obszaru Oceanu Indyjskiego"
+        );
+    }
+
+    else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
+
+        showImage(
+            "w_atlantic_5yr_trends_deseasoned.png",
+            "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla zachodniego obszaru Oceanu Atlantyckiego"
+        );
+    }
+}	
 function resetMap(){
 
     map.setCenter({lat:20,lng:0});
@@ -710,7 +767,7 @@ Trendy liniowe parametrów oceanicznych w pięcioletnich oknach czasowych
 Z uwzględnieniem sezonowości
 </button>
 
-<button>
+<button onclick="showTrendsDeseasoned()">
 Po usunięciu sezonowości
 </button>
 
