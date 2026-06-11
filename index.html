@@ -295,6 +295,8 @@ footer{
 
 var map;
 var selectedArea = "";
+var currentAnalysis = null;
+var currentPeriod = "";
 const areaInfo = {
 
 "Północno-zachodni obszar Oceanu Atlantyckiego": {
@@ -410,36 +412,46 @@ function createBox(north,south,west,east,name){
 
     	selectedArea = name;
 
-		document.querySelectorAll(".sidebar button").forEach(btn => {
-    		btn.classList.remove("activeButton");
-	});
+    	document.querySelectorAll(".sidebar button").forEach(btn => {
+        	btn.classList.remove("activeButton");
+    	});
+
+    	document.getElementById("plot_title").innerHTML = "";
+
+    	document.getElementById("plot_image").style.display = "none";
+
+    	document.getElementById("plot_image").src = "";
+
+    	document.getElementById("plots_container").innerHTML = "";
+
+    	document.getElementById("placeholder").style.display = "block";
 
     	document.getElementById("area_name").innerHTML =
     	name;
 
-    	document.getElementById("plot_area_name").innerHTML =
+	    document.getElementById("plot_area_name").innerHTML =
     	name;
-        
-        const info = areaInfo[name];
 
-		document.getElementById("area_info").style.display = "block";
+    	const info = areaInfo[name];
 
-		document.getElementById("area_info").innerHTML =
-		"<b>Zakres:</b><br>" +
-		info.range +
-		"<br><br>" +
-		"<b>Strefa klimatyczna:</b><br>" +
-		info.climate;
+    	document.getElementById("area_info").style.display = "block";
+
+    	document.getElementById("area_info").innerHTML =
+    	"<b>Zakres:</b><br>" +
+    	info.range +
+    	"<br><br>" +
+    	"<b>Strefa klimatyczna:</b><br>" +
+    	info.climate;
 
     	var bounds = box.getBounds();
 
-		map.panTo(bounds.getCenter());
+    	map.panTo(bounds.getCenter());
 
-		setTimeout(function() {
-    		map.setZoom(4);
-			}, 300);
-});
-}
+    	setTimeout(function() {
+        	map.setZoom(4);
+   		 }, 300);
+
+	});
 
 function showImage(file,title){
 
@@ -458,6 +470,7 @@ function showTimeseriesSeasonal(){
 	if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showTimeseriesSeasonal;
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -520,6 +533,7 @@ function showTimeseriesDeseasoned(){
 	if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showTimeseriesSeasonal;
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
         showImage(
@@ -580,6 +594,7 @@ function showTrendsSeasonal(){
 	if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showTimeseriesSeasonal;
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -641,6 +656,7 @@ function showTrendsDeseasoned(){
 	if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showTimeseriesSeasonal;
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -702,6 +718,7 @@ function showCorrelationsSeasonal(){
 	if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showTimeseriesSeasonal;
 
     let prefix = "";
     let areaText = "";
@@ -757,6 +774,7 @@ function showCorrelationsSeasonal(){
 		if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showTimeseriesSeasonal;
 
     let prefix = "";
     let areaText = "";
@@ -844,6 +862,8 @@ function showSeasonality(period){
 	if(selectedArea === ""){
         return;
     }
+	currentAnalysis = showSeasonality;
+	currentPeriod = period;
 
     let prefix = "";
     let areaText = "";
@@ -1017,7 +1037,8 @@ Aplikacja internetowa umożliwia interaktywne wyświetlanie wyników analizy zmi
     <div id="map_canvas"></div>
 
     <button id="globalButton" onclick="resetMap()">
-        Widok globalny
+        Widok globalny<br>
+    	<span style="font-size:12px;">reset analiz</span>
     </button>
 
 </div>
