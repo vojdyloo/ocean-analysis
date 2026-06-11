@@ -202,7 +202,42 @@ button:hover{
     background:white;
     display:none;
 }
+#plots_container{
 
+    width:95%;
+    max-width:1500px;
+
+    margin:auto;
+}
+
+.plot_block{
+
+    margin-bottom:50px;
+}
+
+.plot_caption{
+
+    text-align:left;
+
+    color:#cbd5e1;
+
+    font-size:18px;
+
+    line-height:1.6;
+
+    margin-bottom:12px;
+}
+
+.plot_block img{
+
+    width:100%;
+
+    border-radius:12px;
+
+    background:white;
+
+    box-shadow:0 8px 25px rgba(0,0,0,0.5);
+}
 .info_box{
     margin-bottom:15px;
     padding:12px;
@@ -399,6 +434,8 @@ function createBox(north,south,west,east,name){
 function showImage(file,title){
 
     document.getElementById("placeholder").style.display = "none";
+
+	document.getElementById("plots_container").innerHTML = "";
 
     document.getElementById("plot_image").style.display = "block";
 
@@ -639,7 +676,87 @@ function showTrendsDeseasoned(){
             "Trendy liniowe SST, SSSA i SSHA w kolejnych pięcioletnich oknach czasowych po usunięciu sezonowości dla zachodniego obszaru Oceanu Atlantyckiego"
         );
     }
-}	
+}
+function showCorrelationsSeasonal(){
+
+    let prefix = "";
+    let areaText = "";
+
+    if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
+        prefix = "central_pacific";
+        areaText = "centralnym obszarze Oceanu Spokojnego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Atlantyckiego"){
+        prefix = "nw_atlantic";
+        areaText = "północno-zachodnim obszarze Oceanu Atlantyckiego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Indyjskiego"){
+        prefix = "nw_indian";
+        areaText = "północno-zachodnim obszarze Oceanu Indyjskiego";
+    }
+
+    else if(selectedArea === "Północno-zachodni obszar Oceanu Spokojnego"){
+        prefix = "nw_pacific";
+        areaText = "północno-zachodnim obszarze Oceanu Spokojnego";
+    }
+
+    else if(selectedArea === "Pacyficzny obszar Oceanu Południowego"){
+        prefix = "southern_ocean";
+        areaText = "pacyficznym obszarze Oceanu Południowego";
+    }
+
+    else if(selectedArea === "Południowo-zachodni obszar Oceanu Indyjskiego"){
+        prefix = "sw_indian";
+        areaText = "południowo-zachodnim obszarze Oceanu Indyjskiego";
+    }
+
+    else if(selectedArea === "Zachodni obszar Oceanu Atlantyckiego"){
+        prefix = "w_atlantic";
+        areaText = "zachodnim obszarze Oceanu Atlantyckiego";
+    }
+
+    showThreePlots(
+
+        `${prefix}_corr_sst_ssha.png`,
+        `Zależność pomiędzy SST a SSHA z uwzględnieniem sezonowości w ${areaText} w pełnym okresie obserwacji (SST i SSHA: 2000–2025).`,
+
+        `${prefix}_corr_sst_sssa.png`,
+        `Zależność pomiędzy SST a SSSA z uwzględnieniem sezonowości w ${areaText} w pełnym okresie obserwacji (SST: 2000–2025, SSSA: 2004–2017).`,
+
+        `${prefix}_corr_sssa_ssha.png`,
+        `Zależność pomiędzy SSSA a SSHA z uwzględnieniem sezonowości w ${areaText} w pełnym okresie obserwacji (SSHA: 2000–2025, SSSA: 2004–2017).`
+    );
+}
+function showThreePlots(plot1,title1,plot2,title2,plot3,title3){
+
+    document.getElementById("placeholder").style.display = "none";
+	
+	document.getElementById("plot_image").style.display = "none";
+
+	document.getElementById("plot_image").src = "";
+
+    document.getElementById("plot_title").innerHTML = "";
+
+    document.getElementById("plots_container").innerHTML = `
+
+        <div class="plot_block">
+            <div class="plot_caption">${title1}</div>
+            <img src="${plot1}">
+        </div>
+
+        <div class="plot_block">
+            <div class="plot_caption">${title2}</div>
+            <img src="${plot2}">
+        </div>
+
+        <div class="plot_block">
+            <div class="plot_caption">${title3}</div>
+            <img src="${plot3}">
+        </div>
+    `;
+}
 function resetMap(){
 
     map.setCenter({lat:20,lng:0});
@@ -656,7 +773,9 @@ function resetMap(){
 	document.getElementById("plot_title").innerHTML = "";
 
 	document.getElementById("plot_image").style.display = "none";
-
+	
+	document.getElementById("plots_container").innerHTML = "";
+	
 	document.getElementById("placeholder").style.display = "block";
 	
     selectedArea = "";
@@ -779,7 +898,7 @@ Po usunięciu sezonowości
 Zależności pomiędzy parametrami oceanicznymi w pełnym okresie obserwacji
 </summary>
 
-<button>
+<button onclick="showCorrelationsSeasonal()">
 Z uwzględnieniem sezonowości
 </button>
 
@@ -809,11 +928,13 @@ Wybierz rodzaj analizy w panelu po prawej stronie.
 
 </div>
 
+<div id="plots_container"></div>
+	
 <img
 id="plot_image"
 src=""
 alt="Wykres">
-
+	
 </div>
 
 <footer>
