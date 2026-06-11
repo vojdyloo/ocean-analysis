@@ -451,7 +451,8 @@ function createBox(north,south,west,east,name){
         	map.setZoom(4);
    		 }, 300);
 
-	});
+});
+}
 
 function showImage(file,title){
 
@@ -533,7 +534,7 @@ function showTimeseriesDeseasoned(){
 	if(selectedArea === ""){
         return;
     }
-	currentAnalysis = showTimeseriesSeasonal;
+	currentAnalysis = showTimeseriesDeseasoned;
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
         showImage(
@@ -594,7 +595,7 @@ function showTrendsSeasonal(){
 	if(selectedArea === ""){
         return;
     }
-	currentAnalysis = showTimeseriesSeasonal;
+	currentAnalysis = showTrendsSeasonal;
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -656,7 +657,7 @@ function showTrendsDeseasoned(){
 	if(selectedArea === ""){
         return;
     }
-	currentAnalysis = showTimeseriesSeasonal;
+	currentAnalysis = showTrendsDeseasoned;
 
     if(selectedArea === "Centralny obszar Oceanu Spokojnego"){
 
@@ -718,7 +719,7 @@ function showCorrelationsSeasonal(){
 	if(selectedArea === ""){
         return;
     }
-	currentAnalysis = showTimeseriesSeasonal;
+	currentAnalysis = showCorrelationsSeasonal;
 
     let prefix = "";
     let areaText = "";
@@ -774,7 +775,7 @@ function showCorrelationsSeasonal(){
 		if(selectedArea === ""){
         return;
     }
-	currentAnalysis = showTimeseriesSeasonal;
+	currentAnalysis = showCorrelationsDeseasoned;
 
     let prefix = "";
     let areaText = "";
